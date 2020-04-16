@@ -8,7 +8,7 @@ module.exports.setRouter = (app) => {
 
     let baseUrl = `${appConfig.apiVersion}/comments`;
 
-    app.get(baseUrl + '/all/:issueId',commentController.getcommentsFunction);
+    app.get(baseUrl + '/all/:issueId',auth.isAuthorized,commentController.getcommentsFunction);
 
     /**
     * @apiGroup comments
@@ -57,7 +57,7 @@ module.exports.setRouter = (app) => {
 }
    */
 
-    app.post(baseUrl + '/add/:issueId',commentController.addCommentsFunction);
+    app.post(baseUrl + '/add/:issueId',auth.isAuthorized,commentController.addCommentsFunction);
    
      /**
     * @apiGroup comments

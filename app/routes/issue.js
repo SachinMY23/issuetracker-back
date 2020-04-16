@@ -11,7 +11,7 @@ module.exports.setRouter = (app) => {
 
     let baseUrl = `${appConfig.apiVersion}/issues`;
      
-    app.get(baseUrl + '/all/:userId',issueController.getAllIssuesFunction);
+    app.get(baseUrl + '/all/:userId',auth.isAuthorized,issueController.getAllIssuesFunction);
    /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -76,7 +76,7 @@ module.exports.setRouter = (app) => {
         ]
     }*/
 
-    app.get(baseUrl + '/single/:issueId',issueController.getSingleIssueFunction);
+    app.get(baseUrl + '/single/:issueId',auth.isAuthorized,issueController.getSingleIssueFunction);
 /*
 /**
     * @apiGroup issues
@@ -147,7 +147,7 @@ module.exports.setRouter = (app) => {
     }
 }*/
     
-    app.post(baseUrl + '/edit/:issueId',issueController.editIssueFunction);
+    app.post(baseUrl + '/edit/:issueId',auth.isAuthorized,issueController.editIssueFunction);
  /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -173,7 +173,7 @@ module.exports.setRouter = (app) => {
         "ok": 1
     }
 }*/
-    app.post(`${baseUrl}/assign/:userId`,issueController.assignIssueFunction);
+    app.post(`${baseUrl}/assign/:userId`,auth.isAuthorized,issueController.assignIssueFunction);
     /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -251,7 +251,7 @@ module.exports.setRouter = (app) => {
     }
 }*/
 
-app.post(baseUrl + '/addwatchers/:issueId',issueController.addWatcherFunction);
+app.post(baseUrl + '/addwatchers/:issueId',auth.isAuthorized,issueController.addWatcherFunction);
 /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -283,7 +283,7 @@ app.post(baseUrl + '/addwatchers/:issueId',issueController.addWatcherFunction);
         "createdOn": "2020-04-05T12:29:44.000Z",
         "__v": 0
     }*/
-app.get(baseUrl + '/allwatchers/:issueId',issueController.getWatcherFunction);
+app.get(baseUrl + '/allwatchers/:issueId',auth.isAuthorized,issueController.getWatcherFunction);
 /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -327,7 +327,7 @@ app.get(baseUrl + '/allwatchers/:issueId',issueController.getWatcherFunction);
     ]
 }
 */
-app.get(baseUrl + '/issues/user/:userId',issueController.getuser);
+app.get(baseUrl + '/issues/user/:userId',auth.isAuthorized,issueController.getuser);
 /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -371,7 +371,7 @@ app.get(baseUrl + '/issues/user/:userId',issueController.getuser);
     ]
 }
 */
-app.get(baseUrl + '/searched',issueController.getSerachedIssueFunction);
+app.get(baseUrl + '/searched',auth.isAuthorized,issueController.getSerachedIssueFunction);
 /**
     * @apiGroup issues
     * @apiVersion  1.0.0
@@ -435,7 +435,7 @@ app.get(baseUrl + '/searched',issueController.getSerachedIssueFunction);
             }
         ]
     }*/
-app.get(baseUrl+'/my/:userId',issueController.getMyIssuesFunction);
+app.get(baseUrl+'/my/:userId',auth.isAuthorized,issueController.getMyIssuesFunction);
 /**
     * @apiGroup issues
     * @apiVersion  1.0.0
