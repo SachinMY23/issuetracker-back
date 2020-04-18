@@ -9,7 +9,7 @@ const http = require('http');
 const appConfig = require('./config/appConfig');
 const logger = require('./app/libs/loggerLib');
 const routeLoggerMiddleware = require('./app/middlewares/routeLogger.js');
-const globalErrorMiddleware = require('./app/middlewares/appErrorHandler.js');
+const globalErrorMiddleware = require('./app/middlewares/appErrorhandler.js');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
