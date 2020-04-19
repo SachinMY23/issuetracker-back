@@ -59,8 +59,8 @@ let setServer = (server) => {
     let alertArray=data.assigneeId.concat(data.watchers);
     if(data.editorId!==data.reporterId){
     alertArray.push(data.reporterId);
-    eventEmitter.emit('save-issue',data);
     }
+    eventEmitter.emit('save-issue',data);
     let dataMsg={ msg:`Hi...${data.editorName} has made changes to the issue "${data.title}"`,
                   issueId:data.issueId   }
     for(let i=0;i<alertArray.length;i++){
@@ -141,6 +141,7 @@ let setServer = (server) => {
    */ 
 })
   eventEmitter.on('save-issue',(data)=>{
+    console.log("emit"+data);
     if(data.receiverId){
     var arr=data.receiverId.split(',');
     userModel.findOne({userId:arr[1]}).exec((err,result)=>{

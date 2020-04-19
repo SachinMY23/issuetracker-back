@@ -193,8 +193,10 @@ let editIssue = (req, res) => {
         res.send(apiResponse)
     } else {
         let options = req.body;
-        options.attachments=options.attachments.split(',');
-        options.assigneeId=options.assigneeId.split(',');
+        if(options.attachments.length!==0){
+        options.attachments=options.attachments.split(',');}
+        if(options.assigneeId.length!==0){
+        options.assigneeId=options.assigneeId.split(',');}
         console.log(options);
         issueModel.updateOne({ 'issueId': req.params.issueId }, options, { multi: true }).exec((err, result) => {
 
