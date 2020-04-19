@@ -50,12 +50,16 @@ let setServer = (server) => {
     * @apiParam {String} title  Title of the issue.(send this in data object)
     * @apiParam {String} reporterName  Full name of the reporter.(send this in data object)
     */
-
+  eventEmitter.on('emit-assign',(data)=>{
+    let dataMsg={msg:`Hi...${data.reporterName} has assigned a new issue`,issueId:data.issueId}
+    myIo.emit(data.assigneeId,dataMsg)
+  })
 
   socket.on('edit-alert',(data)=>{
     let alertArray=data.assigneeId.concat(data.watchers);
     if(data.editorId!==data.reporterId){
     alertArray.push(data.reporterId);
+    eventEmitter.emit('save-issue',data);
     }
     let dataMsg={ msg:`Hi...${data.editorName} has made changes to the issue "${data.title}"`,
                   issueId:data.issueId   }
@@ -136,10 +140,38 @@ let setServer = (server) => {
      * @apiParam {String} name  Full name of the user.(send this in data object)
    */ 
 })
-  
-}
+  eventEmitter.on('save-issue',(data)=>{
+    if(data.receiverId){
+    var arr=data.receiverId.split(',');
+    userModel.findOne({userId:arr[1]}).exec((err,result)=>{
+      if(err){
+          console.log("Error");
+     
+      } else if (check.isEmpty(result)) {
+          console.log('User Not Found.')
+      } else {
+          result.issues.push(data.issueId)
+          result.save((er, succ) => {
+              if (er) {
+                console.log("Error");
+              }else{
+                console.log("Issue saved");
+                let data1={
+                  assigneeId:arr[1],
+                  issueId:data.issueId,
+                  title:data.title,
+                  reporterName:data.editorName
+                }
+                eventEmitter.emit('emit-assign',data1)
+              }
+  })
+      }
+    })
+  }
+})
 
-  
+}
+   
 module.exports = {
     setServer: setServer
 }
